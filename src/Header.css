@@ -1,0 +1,18 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    width: 100%;
+    padding: 10px;
+}
+
+.header img {
+    height: 80px; /* Slightly larger, adjust as needed */
+    width: auto; /* Maintain aspect ratio */
+    margin-right: 20px; /* Space between logo and title */
+}
+
+.header h1 {
+    flex-grow: 1;
+    text-align: left; /* Align the text to the left or center as preferred */
+}

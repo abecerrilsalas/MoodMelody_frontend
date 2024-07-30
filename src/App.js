@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Header from "./Header";
+import TextInput from "./TextInput";
+import Button from "./Button";
+import "./App.css";
 
 function App() {
   const [description, setDescription] = useState("");
   const [recommendations, setRecommendations] = useState([]);
   const [spotifyLink, setSpotifyLink] = useState(null);
   const [error, setError] = useState(null);
-  const [authorized, setAuthorized] = useState(true); // Assume true initially
+  const [authorized, setAuthorized] = useState(true);
   const [sessionId, setSessionId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -22,22 +27,21 @@ function App() {
   };
 
   const handleGetRecommendations = async () => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `http://localhost:5000/recommend`,
         { description },
-        {
-          params: { session_id: sessionId },
-        }
+        { params: { session_id: sessionId } }
       );
       if (response && response.data) {
         if (response.data.authorized) {
           setRecommendations(response.data.recommendation);
           setSpotifyLink(response.data.spotify_link);
-          setError(null); // Clear error message on success
-          setAuthorized(true); // User is authorized
+          setError(null);
+          setAuthorized(true);
         } else {
-          setAuthorized(false); // User is not authorized
+          setAuthorized(false);
         }
       } else {
         console.error("Unexpected response structure:", response);
@@ -46,32 +50,39 @@ function App() {
       console.error("Error fetching recommendation:", error);
       setError("Error fetching recommendation. Please try again.");
       if (error.response && error.response.status === 401) {
-        setAuthorized(false); // User is not authorized
+        setAuthorized(false);
       }
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
   return (
     <div className="App">
-      <h1>Mood Melody</h1>
-      <textarea
+      <Header />
+      <TextInput
         value={description}
         onChange={handleInputChange}
         placeholder="Enter the desired song qualities or mood..."
       />
       <br />
-      <button onClick={handleGetRecommendations}>Get Recommendations</button>
+      <Button
+        type="button"
+        label={loading ? "Loading..." : "Get Recommendations"}
+        onClick={handleGetRecommendations}
+        disabled={loading}
+      />
       {error && <p style={{ color: "red" }}>{error}</p>}
       {!authorized && (
         <div>
           <p style={{ color: "red" }}>You are not authorized in Spotify.</p>
-          <button
+          <Button
+            type="button"
+            label="Authorize"
             onClick={() =>
               (window.location.href = "http://localhost:5000/auth/login")
             }
-          >
-            Authorize
-          </button>
+          />
         </div>
       )}
       {authorized && recommendations.length > 0 && (
