@@ -1,0 +1,23 @@
+.rectangle {
+    position: relative;
+    width: 1055px;  /* Set the width according to your design */
+    height: 396px;  /* Set the height according to your design */
+    background-color: #d9d9d9;  /* Example background color */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* Optional: adds shadow for depth */
+}
+
+    .rectangle-title {
+    font-size: 32px; /* Larger font size for the title */
+    color: #333;  /* Dark color for text */
+    margin-bottom: 10px;  /* Space between title and description */
+}
+
+  .rectangle-description {
+    font-size: 16px; /* Smaller font size for the description */
+    color: #666;  /* Lighter color for text */
+  }

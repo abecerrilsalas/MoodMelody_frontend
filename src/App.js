@@ -3,6 +3,7 @@ import axios from "axios";
 import Header from "./Header";
 import TextInput from "./TextInput";
 import Button from "./Button";
+import Rectangle1 from "./Rectangle1";
 import "./App.css";
 
 function App() {
@@ -60,6 +61,11 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <Rectangle1
+        title="Mood Melody"
+        description="Discover music that fits your mood. + add description"
+      />
+
       <TextInput
         value={description}
         onChange={handleInputChange}
