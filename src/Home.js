@@ -10,8 +10,6 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [authorized, setAuthorized] = useState(true);
-  const [setRecommendations] = useState([]);
-  const [setSpotifyLink] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,8 +34,8 @@ const Home = () => {
       );
       if (response && response.data) {
         if (response.data.authorized) {
-          setRecommendations(response.data.recommendation);
-          setSpotifyLink(response.data.spotify_link);
+          // setRecommendations(response.data.recommendation);
+          // setSpotifyLink(response.data.spotify_link);
           setError(null);
           setAuthorized(true);
           navigate("/playlist", {
