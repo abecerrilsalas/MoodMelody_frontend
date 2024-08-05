@@ -1,0 +1,94 @@
+.playlist-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    padding-top: 200px; /* Adjust this value to match your header height */
+  }
+  
+  .playlist-container {
+    display: flex;
+    flex: 1;
+    padding: 2rem;
+    gap: 4rem;
+  }
+  
+  .input-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-right: 2rem;
+    padding-top: 4rem; /* This moves the content lower */
+  }
+  
+  .player-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 2rem;
+  }
+  
+  .text-input {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .button {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #1ed760;
+  }
+  
+  .button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 1rem;
+  }
+  
+  .spotify-link {
+    margin-top: 1rem;
+    color: #1DB954;
+    text-decoration: none;
+  }
+  
+  .spotify-link:hover {
+    text-decoration: underline;
+  }
+  
+  .h2 {
+    margin-bottom: 1.5rem; /* Increased margin below the title */
+  }
+
+  .debug-info {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .debug-info pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }

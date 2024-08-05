@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import TextInput from "./TextInput";
 import Button from "./Button";
-import Rectangle1 from "./Rectangle1";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -66,10 +65,6 @@ const Home = () => {
 
   return (
     <div>
-      <Rectangle1
-        title="Mood Melody"
-        description="Discover music that fits your mood. + add description"
-      />
       <TextInput
         value={description}
         onChange={handleInputChange}

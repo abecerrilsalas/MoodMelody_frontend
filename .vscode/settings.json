@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/e64dd2f8-55a3-4f00-a3cd-4d7376468257/resourceGroups/MoodMelody/providers/Microsoft.Web/sites/MoodMelody",
+    "appService.deploySubpath": "."
+}

@@ -5,31 +5,18 @@ function Header() {
   return (
     <header className="header">
       <img
-        src="/images/moodMelody_logo.jpg"
+        src="/images/logo.jpg"
         alt="Mood Melody logo"
-        style={{ height: "50px", width: "auto" }}
+        className="header-logo"
       />
-      <h1>Mood Melody</h1>
+      <div className="header-content">
+        <h1 className="rectangle-title">Mood Melody</h1>
+        <p className="rectangle-description">
+          Discover music that fits your mood.
+        </p>
+      </div>
     </header>
   );
 }
 
 export default Header;
-
-// import React from "react";
-// import "./Header.css";
-
-// function Header() {
-//   return (
-//     <header className="header">
-//       <img
-//         src="/images/moodMelody_logo.jpg"
-//         alt="Mood Melody logo"
-//         style={{ height: "50px", width: "auto" }}
-//       />
-//       <h1>Mood Melody</h1>
-//     </header>
-//   );
-// }
-
-// export default Header;
