@@ -10,8 +10,8 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [authorized, setAuthorized] = useState(true);
-  // const [recommendations, setRecommendations] = useState([]);
-  // const [spotifyLink, setSpotifyLink] = useState(null);
+  const [setRecommendations] = useState([]);
+  const [setSpotifyLink] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
