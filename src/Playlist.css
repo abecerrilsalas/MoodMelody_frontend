@@ -92,3 +92,24 @@
     white-space: pre-wrap;
     word-wrap: break-word;
   }
+
+  .request-history {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
+  
+  .request-history ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .request-history li {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .request-history li:hover {
+    background-color: #f0f0f0;
+  }
