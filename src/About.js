@@ -1,12 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+console.log("API URL:", apiUrl);
+
 const About = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleAuthorize = () => {
         // Redirect to backend authorization endpoint
-        window.location.href = "http://127.0.0.1:5000/auth/login";
+        window.location.href = `${apiUrl}/auth/login`;
     };
 
     return (
