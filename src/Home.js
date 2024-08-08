@@ -15,7 +15,6 @@ const Home = () => {
   const [authorized, setAuthorized] = useState(true);
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const sessionIdParam = urlParams.get("session_id");
@@ -92,9 +91,7 @@ const Home = () => {
           <Button
             type="button"
             label="Authorize"
-            onClick={() =>
-              (window.location.href = `${apiUrl}/auth/login`)
-            }
+            onClick={() => (window.location.href = `${apiUrl}/auth/login`)}
           />
         </div>
       )}

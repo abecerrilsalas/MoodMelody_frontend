@@ -1,6 +1,5 @@
-// Button.js
 import React from "react";
-import "./Button.css"; // Import the specific button styles
+import "./Button.css";
 
 function Button({ label, onClick, large = false, loading = false }) {
   const className = large ? "button largeButton" : "button";

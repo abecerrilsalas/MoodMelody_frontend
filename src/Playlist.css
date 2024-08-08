@@ -113,3 +113,28 @@
   .request-history li:hover {
     background-color: #f0f0f0;
   }
+
+  .playlist-container {
+    position: relative; 
+    min-height: 80vh; 
+    padding-bottom: 60px; 
+  }
+
+.about-button-container {
+  position: absolute;
+  bottom: 60px; 
+  right: 5px;
+}
+
+
+.footer {
+  height: 50px; 
+  clear: both; 
+}
+
+
+
+
+
+
+

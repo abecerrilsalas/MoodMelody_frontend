@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SpotifyPlayer from "./SpotifyPlayer";
 import TextInput from "./TextInput";
 import Button from "./Button";
 import Header from "./Header";
+import Footer from "./Footer";
 import "./Playlist.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -25,6 +26,7 @@ const RequestHistory = ({ history, onSelectRequest }) => (
 
 const Playlist = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { spotifyLink, sessionId } = location.state || {
     spotifyLink: null,
     sessionId: null,
@@ -144,7 +146,11 @@ const Playlist = () => {
           history={requestHistory}
           onSelectRequest={handleSelectRequest}
         />
+        <div className="about-button-container">
+          <Button label="About MoodMelody" onClick={() => navigate("/about")} />
+        </div>
       </main>
+      <Footer />
     </div>
   );
 };
