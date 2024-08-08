@@ -50,6 +50,7 @@ const Home = () => {
               recommendations: response.data.recommendation,
               spotifyLink: response.data.spotify_link,
               sessionId: sessionId,
+              userId: response.data.user_id  // Add userId to state
             },
           });
           localStorage.removeItem("description");

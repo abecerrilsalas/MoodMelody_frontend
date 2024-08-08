@@ -27,7 +27,7 @@ const RequestHistory = ({ history, onSelectRequest }) => (
 const Playlist = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { spotifyLink, sessionId } = location.state || {
+  const { spotifyLink, sessionId: initialSessionId } = location.state || {
     spotifyLink: null,
     sessionId: null,
   };
@@ -37,13 +37,42 @@ const Playlist = () => {
   const [error, setError] = useState("");
   const [currentSpotifyLink, setCurrentSpotifyLink] = useState(spotifyLink);
   const [requestHistory, setRequestHistory] = useState([]);
+  const [sessionId, setSessionId] = useState(initialSessionId);
 
   useEffect(() => {
-    const storedHistory = localStorage.getItem("requestHistory");
-    if (storedHistory) {
-      setRequestHistory(JSON.parse(storedHistory));
+    const fetchHistory = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/history`, {
+          params: {
+            session_id: sessionId,
+          },
+        });
+
+        if (response.data && Array.isArray(response.data)) {
+          setRequestHistory(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching request history:", error);
+      }
+    };
+
+    fetchHistory();
+  }, [sessionId]);
+
+  useEffect(() => {
+    if (location.state) {
+      const { currentSpotifyLink, description, sessionId } = location.state;
+      if (currentSpotifyLink) {
+        setCurrentSpotifyLink(currentSpotifyLink);
+      }
+      if (description) {
+        setDescription(description);
+      }
+      if (sessionId) {
+        setSessionId(sessionId);
+      }
     }
-  }, []);
+  }, [location.state]);
 
   const handleInputChange = (e) => {
     setDescription(e.target.value);
@@ -101,6 +130,12 @@ const Playlist = () => {
     setDescription(request.description);
   };
 
+  const navigateToAbout = () => {
+    navigate("/about", {
+      state: { sessionId, requestHistory, currentSpotifyLink, description },
+    });
+  };
+
   return (
     <div className="playlist-page">
       <Header />
@@ -147,7 +182,7 @@ const Playlist = () => {
           onSelectRequest={handleSelectRequest}
         />
         <div className="about-button-container">
-          <Button label="About MoodMelody" onClick={() => navigate("/about")} />
+          <Button label="About MoodMelody" onClick={navigateToAbout} />
         </div>
       </main>
       <Footer />
