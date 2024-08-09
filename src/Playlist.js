@@ -9,7 +9,6 @@ import Footer from "./Footer";
 import "./Playlist.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-console.log("API URL:", apiUrl);
 
 const RequestHistory = ({ history, onSelectRequest }) => (
   <div className="request-history">
