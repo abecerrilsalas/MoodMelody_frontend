@@ -14,7 +14,8 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 
 const RequestHistory = ({ history, onSelectRequest }) => (
-  <div className="request-history">
+  <div className="request-history scrollable-container">
+  {/* <div className="request-history"> */}
     <h3>Request History</h3>
     <ul>
       {history.map((item, index) => (

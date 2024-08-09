@@ -98,6 +98,15 @@
     border-top: 1px solid #ccc;
     padding-top: 20px;
   }
+
+  .scrollable-container {
+    max-height: 55vh; /* Adjust the height as needed */
+    overflow-y: auto;
+    border: 1px solid #ccc; /* Optional: Add a border to indicate the scrollable area */
+    padding: 8px; /* Optional: Add padding for a better look */
+    margin-top: 16px; /* Optional: Add margin to separate from other elements */
+  }
+  
   
   .request-history ul {
     list-style-type: none;
