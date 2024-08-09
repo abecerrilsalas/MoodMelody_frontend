@@ -4,7 +4,7 @@ import Home from "./Home";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 
-//mocks
+// Mocks
 jest.mock("axios");
 
 const renderWithRouter = (ui, { route = "/" } = {}) => {

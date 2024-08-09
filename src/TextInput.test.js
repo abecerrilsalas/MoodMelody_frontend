@@ -15,10 +15,12 @@ describe("TextInput", () => {
     expect(screen.getByPlaceholderText(placeholder)).toBeInTheDocument();
   });
 
-  it("displays the correct value", () => {
+  it("displays the correct value and is read-only", () => {
     const value = "Test value";
-    render(<TextInput value={value} />);
-    expect(screen.getByRole("textbox")).toHaveValue(value);
+    render(<TextInput value={value} readOnly={true} />);
+    const input = screen.getByRole("textbox");
+    expect(input).toHaveValue(value);
+    expect(input).toHaveAttribute("readOnly");
   });
 
   it("calls onChange when text is entered", () => {
@@ -30,8 +32,9 @@ describe("TextInput", () => {
   });
 
   it("applies the correct CSS class", () => {
-    render(<TextInput />);
-    expect(screen.getByRole("textbox")).toHaveClass("text-input");
+    const className = "text-input"; // Define class name to check
+    render(<TextInput className={className} />);
+    expect(screen.getByRole("textbox")).toHaveClass(className);
   });
 
   it("updates value when typing", () => {

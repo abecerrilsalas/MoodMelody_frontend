@@ -11,7 +11,6 @@ const SpotifyPlayer = ({ spotifyLink }) => {
       width="300"
       height="380"
       frameBorder="0"
-      allowTransparency="true"
       allow="encrypted-media"
       title="Spotify"
       style={{ width: "100%", maxWidth: "600px" }}

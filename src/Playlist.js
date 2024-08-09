@@ -5,7 +5,6 @@ import SpotifyPlayer from "./SpotifyPlayer";
 import TextInput from "./TextInput";
 import Button from "./Button";
 import Header from "./Header";
-import Footer from "./Footer";
 import "./Playlist.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -149,7 +148,6 @@ const Playlist = () => {
           <Button label="About MoodMelody" onClick={() => navigate("/about")} />
         </div>
       </main>
-      <Footer />
     </div>
   );
 };

@@ -28,7 +28,6 @@ describe("SpotifyPlayer", () => {
     expect(iframeElement).toHaveAttribute("width", "300");
     expect(iframeElement).toHaveAttribute("height", "380");
     expect(iframeElement).toHaveAttribute("frameBorder", "0");
-    expect(iframeElement).toHaveAttribute("allowTransparency", "true");
     expect(iframeElement).toHaveAttribute("allow", "encrypted-media");
   });
 
