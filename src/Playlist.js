@@ -9,7 +9,9 @@ import Footer from "./Footer";
 import "./Playlist.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-console.log("API URL:", apiUrl);
+// console.log("API URL:", apiUrl);
+
+
 
 const RequestHistory = ({ history, onSelectRequest }) => (
   <div className="request-history">
@@ -40,6 +42,17 @@ const Playlist = () => {
   const [sessionId, setSessionId] = useState(initialSessionId);
 
   useEffect(() => {
+    console.log("Initial Spotify Link:", spotifyLink);
+    setCurrentSpotifyLink(spotifyLink);
+  }, [spotifyLink]);
+
+  useEffect(() => {
+    console.log("Location State:", location.state);
+  }, [location.state]);
+
+  
+
+  useEffect(() => {
     const fetchHistory = async () => {
       try {
         const response = await axios.get(`${apiUrl}/history`, {
@@ -62,7 +75,9 @@ const Playlist = () => {
   useEffect(() => {
     if (location.state) {
       const { currentSpotifyLink, description, sessionId } = location.state;
+      console.log("Location State:", location.state);
       if (currentSpotifyLink) {
+        console.log("Setting Current Spotify Link:", currentSpotifyLink);
         setCurrentSpotifyLink(currentSpotifyLink);
       }
       if (description) {
@@ -77,6 +92,12 @@ const Playlist = () => {
   const handleInputChange = (e) => {
     setDescription(e.target.value);
   };
+
+
+  useEffect(() => {
+    console.log("Initial Spotify Link (adding useEffect):", spotifyLink);
+    setCurrentSpotifyLink(spotifyLink);
+  }, [spotifyLink]);
 
   const getRecommendations = async () => {
     try {
@@ -94,6 +115,8 @@ const Playlist = () => {
           },
         }
       );
+
+      console.log("Recommendation Response:", response.data);
 
       if (response.data.spotify_link) {
         setCurrentSpotifyLink(response.data.spotify_link);
@@ -123,6 +146,11 @@ const Playlist = () => {
     setError("");
 
     await getRecommendations();
+    if (currentSpotifyLink) {
+      setTimeout(() => {
+        setCurrentSpotifyLink(currentSpotifyLink);
+      }, 200); // Adjust timeout as necessary
+    }
   };
 
   const handleSelectRequest = (request) => {
