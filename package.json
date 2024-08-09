@@ -6,6 +6,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
+    "history": "^5.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
@@ -41,9 +42,11 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-transform-runtime": "^7.24.7",
     "@babel/preset-env": "^7.25.3",
+    "@babel/preset-react": "^7.24.7",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "babel-jest": "^29.7.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1"
   },
   "jest": {
@@ -51,9 +54,11 @@
       "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "/node_modules/",
+      "/node_modules/(?!(axios)/)",
       "\\.pnp\\.[^\\/]+$"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
   }
 }
-

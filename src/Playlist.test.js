@@ -13,7 +13,11 @@ const renderWithRouter = (ui, { route = "/" } = {}) => {
 };
 
 describe("Playlist Component", () => {
-  // check if the component renders
+  afterEach(() => {
+    jest.clearAllMocks(); // Clear all mocks after each test to avoid interference
+  });
+
+  // Check if the component renders
   test("renders Playlist component without crashing", () => {
     renderWithRouter(<Playlist />);
     expect(
@@ -22,7 +26,7 @@ describe("Playlist Component", () => {
     expect(screen.getByText("Get Recommendations")).toBeInTheDocument();
   });
 
-  // verify input handling
+  // Verify input handling
   test("handles input change correctly", () => {
     renderWithRouter(<Playlist />);
     const input = screen.getByPlaceholderText(
@@ -32,12 +36,12 @@ describe("Playlist Component", () => {
     expect(input.value).toBe("Happy");
   });
 
-  // check API interaction and response handling
+  // Check API interaction and response handling
   test("fetches recommendations on button click and updates link", async () => {
     const mockResponse = {
       data: { spotify_link: "http://spotify.com/playlist/123" },
     };
-    axios.post.mockResolvedValue(mockResponse);
+    axios.post.mockResolvedValueOnce(mockResponse);
 
     renderWithRouter(<Playlist />);
     fireEvent.change(
@@ -48,9 +52,30 @@ describe("Playlist Component", () => {
     );
     fireEvent.click(screen.getByText("Get Recommendations"));
 
-    await waitFor(() => expect(axios.post).toHaveBeenCalled());
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
     expect(
       screen.getByText("Open Full Playlist on Spotify")
+    ).toBeInTheDocument(); // Check if the Spotify link is rendered
+  });
+
+  // Simulate API failure and verify error handling
+  test("handles API failure gracefully", async () => {
+    axios.post.mockRejectedValueOnce(
+      new Error("Failed to fetch recommendations")
+    );
+
+    renderWithRouter(<Playlist />);
+    fireEvent.change(
+      screen.getByPlaceholderText(
+        "Enter the desired song qualities or mood..."
+      ),
+      { target: { value: "Happy" } }
+    );
+    fireEvent.click(screen.getByText("Get Recommendations"));
+
+    await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
+    expect(
+      screen.getByText(/Failed to fetch recommendations/i)
     ).toBeInTheDocument();
   });
 });
