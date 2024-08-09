@@ -14,6 +14,7 @@ const renderWithRouter = (ui, { route = "/" } = {}) => {
 
 describe("Home Component", () => {
   beforeEach(() => {
+    // Set up default responses for axios
     axios.post.mockResolvedValue({
       data: {
         authorized: true,
@@ -21,6 +22,15 @@ describe("Home Component", () => {
         spotify_link: "http://spotify.com/playlist/123",
       },
     });
+
+    // Mock console.error to avoid logging to the console during tests
+    jest.spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    // Clear all mocks
+    axios.post.mockClear();
+    console.error.mockRestore();
   });
 
   test("renders with input and button", () => {
@@ -44,26 +54,25 @@ describe("Home Component", () => {
 
   test("fetches recommendations and navigates on successful response", async () => {
     renderWithRouter(<Home />);
-
+    const input = screen.getByPlaceholderText(
+      "Enter the desired song qualities or mood..."
+    );
+    fireEvent.change(input, { target: { value: "Relaxing" } });
     const button = screen.getByRole("button", { name: "Get Recommendations" });
     fireEvent.click(button);
 
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith(
-        "http://127.0.0.1:5000/recommend",
-        { description: "" },
+        `${process.env.REACT_APP_API_URL}/recommend`,
+        { description: "Relaxing" },
         { params: { session_id: null } }
       );
     });
   });
 
   test("displays error when not authorized", async () => {
-    axios.post.mockRejectedValueOnce({
-      response: { status: 401 },
-    });
-
+    axios.post.mockRejectedValueOnce({ response: { status: 401 } });
     renderWithRouter(<Home />);
-
     const button = screen.getByRole("button", { name: "Get Recommendations" });
     fireEvent.click(button);
 
