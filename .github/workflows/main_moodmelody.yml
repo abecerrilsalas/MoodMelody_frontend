@@ -1,4 +1,4 @@
-name: Build and deploy Node.js app to Heroku - MoodMelody
+name: Build and deploy Node.js app to Heroku - moodmelody
 
 on:
   push:
@@ -12,6 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
@@ -29,6 +31,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure full history is fetched
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
