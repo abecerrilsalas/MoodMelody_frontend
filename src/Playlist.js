@@ -30,10 +30,14 @@ const Playlist = () => {
     sessionId: null,
   };
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(
+    localStorage.getItem("description") || ""
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [currentSpotifyLink, setCurrentSpotifyLink] = useState(spotifyLink);
+  const [currentSpotifyLink, setCurrentSpotifyLink] = useState(
+    localStorage.getItem("currentSpotifyLink") || spotifyLink
+  );
   const [requestHistory, setRequestHistory] = useState([]);
 
   useEffect(() => {
@@ -42,6 +46,14 @@ const Playlist = () => {
       setRequestHistory(JSON.parse(storedHistory));
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("description", description);
+  }, [description]);
+
+  useEffect(() => {
+    localStorage.setItem("currentSpotifyLink", currentSpotifyLink);
+  }, [currentSpotifyLink]);
 
   const handleInputChange = (e) => {
     setDescription(e.target.value);
