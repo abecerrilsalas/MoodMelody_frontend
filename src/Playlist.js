@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SpotifyPlayer from "./SpotifyPlayer";
@@ -25,51 +25,54 @@ const RequestHistory = ({ history, onSelectRequest }) => (
 const Playlist = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { spotifyLink, sessionId } = location.state || {
-    spotifyLink: null,
-    sessionId: null,
-  };
+  const { spotifyLink, sessionId, description, initialHistory } = location.state || {};
 
-  const [description, setDescription] = useState(
-    localStorage.getItem("description") || ""
-  );
+  const [currentDescription, setCurrentDescription] = useState(description || "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [currentSpotifyLink, setCurrentSpotifyLink] = useState(
-    localStorage.getItem("currentSpotifyLink") || spotifyLink
-  );
-  const [requestHistory, setRequestHistory] = useState([]);
+  const [currentSpotifyLink, setCurrentSpotifyLink] = useState(spotifyLink);
+  const [requestHistory, setRequestHistory] = useState(initialHistory || []);
+  const [showPlaylist, setShowPlaylist] = useState(false);
 
-  useEffect(() => {
-    const storedHistory = localStorage.getItem("requestHistory");
-    if (storedHistory) {
-      setRequestHistory(JSON.parse(storedHistory));
+  const fetchHistory = useCallback(async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/history`, {
+        params: { session_id: sessionId },
+      });
+      setRequestHistory(response.data);
+    } catch (error) {
+      console.error("Error fetching history:", error);
+      setError("Failed to fetch request history.");
     }
-  }, []);
+  }, [sessionId]);
 
   useEffect(() => {
-    localStorage.setItem("description", description);
-  }, [description]);
-
-  useEffect(() => {
-    localStorage.setItem("currentSpotifyLink", currentSpotifyLink);
-  }, [currentSpotifyLink]);
+    if (!initialHistory) {
+      fetchHistory();
+    }
+    if (spotifyLink) {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        setShowPlaylist(true);
+      }, 5000);
+    }
+  }, [fetchHistory, spotifyLink, initialHistory]);
 
   const handleInputChange = (e) => {
-    setDescription(e.target.value);
+    setCurrentDescription(e.target.value);
   };
 
   const getRecommendations = async () => {
+    setLoading(true);
+    setShowPlaylist(false);
     try {
       const response = await axios.post(
         `${apiUrl}/recommend`,
         {
-          description,
+          description: currentDescription,
         },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
           params: {
             session_id: sessionId,
           },
@@ -78,37 +81,38 @@ const Playlist = () => {
 
       if (response.data.spotify_link) {
         setCurrentSpotifyLink(response.data.spotify_link);
-        const newRequest = {
-          description,
-          spotifyLink: response.data.spotify_link,
-          timestamp: new Date().toISOString(),
-        };
-        const updatedHistory = [...requestHistory, newRequest];
-        setRequestHistory(updatedHistory);
-        localStorage.setItem("requestHistory", JSON.stringify(updatedHistory));
+        setTimeout(() => {
+          setLoading(false);
+          setShowPlaylist(true);
+        }, 5000);
+        await fetchHistory(); // Fetch updated history after new recommendation
       } else {
         setError(
           "Failed to fetch recommendations. No Spotify link found in the response."
         );
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error fetching recommendation:", error);
       setError(`Error fetching recommendation: ${error.message}`);
-    } finally {
       setLoading(false);
     }
   };
 
   const handleGetRecommendations = async () => {
-    setLoading(true);
     setError("");
-
     await getRecommendations();
   };
 
   const handleSelectRequest = (request) => {
     setCurrentSpotifyLink(request.spotifyLink);
-    setDescription(request.description);
+    setCurrentDescription(request.description);
+    setShowPlaylist(false);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setShowPlaylist(true);
+    }, 5000);
   };
 
   return (
@@ -118,7 +122,7 @@ const Playlist = () => {
         <div className="input-section">
           <h2>Enter Your Mood</h2>
           <TextInput
-            value={description}
+            value={currentDescription}
             onChange={handleInputChange}
             placeholder="Enter the desired song qualities or mood..."
           />
@@ -130,7 +134,9 @@ const Playlist = () => {
           {error && <p className="error-message">{error}</p>}
         </div>
         <div className="player-section">
-          {currentSpotifyLink ? (
+          {loading ? (
+            <p>Loading your Playlist...</p>
+          ) : showPlaylist && currentSpotifyLink ? (
             <>
               <SpotifyPlayer
                 key={currentSpotifyLink}
