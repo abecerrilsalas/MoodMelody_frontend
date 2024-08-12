@@ -31,6 +31,18 @@ const Home = () => {
     setDescription(e.target.value);
   };
 
+  const fetchHistory = async (sessionId) => {
+    try {
+      const response = await axios.get(`${apiUrl}/history`, {
+        params: { session_id: sessionId },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching history:", error);
+      return [];
+    }
+  };
+
   const handleGetRecommendations = async () => {
     setLoading(true);
     localStorage.setItem("description", description);
@@ -44,11 +56,16 @@ const Home = () => {
         if (response.data.authorized) {
           setError(null);
           setAuthorized(true);
+          const history = await fetchHistory(sessionId);
           navigate("/playlist", {
             state: {
               recommendations: response.data.recommendation,
               spotifyLink: response.data.spotify_link,
               sessionId: sessionId,
+              description: description,
+              playlistId: response.data.playlist_id,
+              userId: response.data.user_id,
+              initialHistory: history
             },
           });
           localStorage.removeItem("description");
