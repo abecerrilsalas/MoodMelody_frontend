@@ -9,8 +9,7 @@ const Landing = () => {
   };
 
   return (
-    <div>
-      <h1>About Mood Melody</h1>
+    <div className="landing-page">
       <h1>Welcome to Mood Melody!</h1>
       <p>
         <strong>Mood Melody</strong> is a unique music recommendation app

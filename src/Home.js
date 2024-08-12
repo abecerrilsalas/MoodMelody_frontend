@@ -3,6 +3,7 @@ import axios from "axios";
 import TextInput from "./TextInput";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+import "./Home.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -65,7 +66,7 @@ const Home = () => {
               description: description,
               playlistId: response.data.playlist_id,
               userId: response.data.user_id,
-              initialHistory: history
+              initialHistory: history,
             },
           });
           localStorage.removeItem("description");
@@ -87,7 +88,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="home-container">
       <TextInput
         value={description}
         onChange={handleInputChange}

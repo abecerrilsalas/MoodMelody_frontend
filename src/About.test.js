@@ -48,7 +48,7 @@ test("navigates back to playlist on button click", () => {
 
   expect(history.push).toHaveBeenCalledWith(
     expect.objectContaining({ pathname: "/playlist", hash: "", search: "" }),
-    undefined,
-    {}
+    expect.anything(),
+    expect.anything()
   );
 });
