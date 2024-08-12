@@ -61,10 +61,8 @@ const Playlist = () => {
     }
     if (spotifyLink) {
       setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        setShowPlaylist(true);
-      }, 5000);
+      setShowPlaylist(true);
+      setLoading(false);
     }
   }, [fetchHistory, spotifyLink, initialHistory]);
 
@@ -90,11 +88,11 @@ const Playlist = () => {
 
       if (response.data.spotify_link) {
         setCurrentSpotifyLink(response.data.spotify_link);
+        fetchHistory(); // Immediately fetch updated history
         setTimeout(() => {
           setLoading(false);
           setShowPlaylist(true);
-        }, 5000);
-        await fetchHistory(); // Fetch updated history after new recommendation
+        }, 1000); // Reduced to 1 second
       } else {
         setError(
           "Failed to fetch recommendations. No Spotify link found in the response."
