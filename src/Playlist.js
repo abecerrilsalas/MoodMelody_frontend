@@ -116,12 +116,8 @@ const Playlist = () => {
   const handleSelectRequest = (request) => {
     setCurrentSpotifyLink(request.spotifyLink);
     setCurrentDescription(request.description);
-    setShowPlaylist(false);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setShowPlaylist(true);
-    }, 5000);
+    setShowPlaylist(true);
+    setLoading(false);
   };
 
   const navigateToAbout = () => {
