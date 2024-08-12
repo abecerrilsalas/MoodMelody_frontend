@@ -12,7 +12,7 @@ function Header() {
       <div className="header-content">
         <h1 className="rectangle-title">Mood Melody</h1>
         <p className="rectangle-description">
-          Discover music that fits your mood.
+          Discover music that fits your mood
         </p>
       </div>
     </header>

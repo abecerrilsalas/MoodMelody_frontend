@@ -6,28 +6,37 @@ import TextInput from "./TextInput";
 import Button from "./Button";
 import Header from "./Header";
 import "./Playlist.css";
+import "./Landing.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const RequestHistory = ({ history, onSelectRequest }) => (
+const RequestHistory = ({ history, onSelectRequest, onAboutClick }) => (
   <div className="request-history">
     <h3>Request History</h3>
-    <ul>
-      {history.map((item, index) => (
-        <li key={index} onClick={() => onSelectRequest(item)}>
-          {item.description} - {new Date(item.timestamp).toLocaleString()}
-        </li>
-      ))}
-    </ul>
+    <div className="history-list">
+      <ul>
+        {history.map((item, index) => (
+          <li key={index} onClick={() => onSelectRequest(item)}>
+            {item.description} - {new Date(item.timestamp).toLocaleString()}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div className="about-button-container">
+      <Button label="About MoodMelody" onClick={onAboutClick} />
+    </div>
   </div>
 );
 
 const Playlist = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { spotifyLink, sessionId, description, initialHistory } = location.state || {};
+  const { spotifyLink, sessionId, description, initialHistory } =
+    location.state || {};
 
-  const [currentDescription, setCurrentDescription] = useState(description || "");
+  const [currentDescription, setCurrentDescription] = useState(
+    description || ""
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [currentSpotifyLink, setCurrentSpotifyLink] = useState(spotifyLink);
@@ -122,8 +131,8 @@ const Playlist = () => {
         sessionId: sessionId,
         description: currentDescription,
         requestHistory: requestHistory,
-        showPlaylist: showPlaylist
-      }
+        showPlaylist: showPlaylist,
+      },
     });
   };
 
@@ -173,10 +182,8 @@ const Playlist = () => {
         <RequestHistory
           history={requestHistory}
           onSelectRequest={handleSelectRequest}
+          onAboutClick={navigateToAbout}
         />
-        <div className="about-button-container">
-          <Button label="About MoodMelody" onClick={navigateToAbout} />
-        </div>
       </main>
     </div>
   );
