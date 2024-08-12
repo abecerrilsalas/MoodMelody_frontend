@@ -1,14 +1,16 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Button from "./Button";
 
 const About = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const playlistState = location.state || {};
 
   const navigateBack = () => {
-    navigate("/playlist");
+    navigate("/playlist", { state: playlistState });
   };
 
   return (

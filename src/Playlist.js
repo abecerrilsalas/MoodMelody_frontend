@@ -115,6 +115,18 @@ const Playlist = () => {
     }, 5000);
   };
 
+  const navigateToAbout = () => {
+    navigate("/about", {
+      state: {
+        spotifyLink: currentSpotifyLink,
+        sessionId: sessionId,
+        description: currentDescription,
+        requestHistory: requestHistory,
+        showPlaylist: showPlaylist
+      }
+    });
+  };
+
   return (
     <div className="playlist-page">
       <Header />
@@ -163,7 +175,7 @@ const Playlist = () => {
           onSelectRequest={handleSelectRequest}
         />
         <div className="about-button-container">
-          <Button label="About MoodMelody" onClick={() => navigate("/about")} />
+          <Button label="About MoodMelody" onClick={navigateToAbout} />
         </div>
       </main>
     </div>
