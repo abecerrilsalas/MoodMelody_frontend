@@ -7,49 +7,41 @@
     padding: 20px;
     max-width: 600px;
     margin: 0 auto;
-  }
-  
-  .text-input {
+}
+
+.text-input {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-  }
-  
-  .button {
-    width: 100%;
-    padding: 10px;
-    background-color: #1B2536;
-    color: white;
+}
+
+.button {
+    background-color: #4CAF50; 
+    color: #FFFFFF;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #2C3E50;
-  }
-  
-  .button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  .error-message {
+    padding: 10px 20px; 
+}
+
+.button:hover {
+    background-color: #66BB6A; 
+}
+
+.error-message {
     color: red;
     margin-top: 10px;
-  }
-  
-  .auth-message {
+}
+
+.auth-message {
     margin-top: 20px;
     text-align: center;
-  }
-  
-  .auth-message p {
+}
+
+.auth-message p {
     color: red;
     margin-bottom: 10px;
-  }
+}

@@ -7,6 +7,7 @@ import About from "./About";
 import Header from "./Header";
 import Footer from "./Footer";
 import "./App.css";
+import "./TextInput.css";
 
 function App() {
   return (

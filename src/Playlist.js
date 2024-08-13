@@ -10,21 +10,16 @@ import "./Landing.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const RequestHistory = ({ history, onSelectRequest, onAboutClick }) => (
+const RequestHistory = ({ history, onSelectRequest }) => (
   <div className="request-history">
-    <h3>Request History</h3>
-    <div className="history-list">
-      <ul>
-        {history.map((item, index) => (
-          <li key={index} onClick={() => onSelectRequest(item)}>
-            {item.description} - {new Date(item.timestamp).toLocaleString()}
-          </li>
-        ))}
-      </ul>
-    </div>
-    <div className="about-button-container">
-      <Button label="About MoodMelody" onClick={onAboutClick} />
-    </div>
+    <h2 className="request-history-title">Request History</h2>
+    <ul className="history-list">
+      {history.map((item, index) => (
+        <li key={index} onClick={() => onSelectRequest(item)}>
+          {item.description} - {new Date(item.timestamp).toLocaleString()}
+        </li>
+      ))}
+    </ul>
   </div>
 );
 
@@ -142,6 +137,7 @@ const Playlist = () => {
             placeholder="Enter the desired song qualities or mood..."
           />
           <Button
+            className="get-recommendations-button"
             label={loading ? "Loading..." : "Get Recommendations"}
             onClick={handleGetRecommendations}
             disabled={loading}
@@ -173,11 +169,15 @@ const Playlist = () => {
             </p>
           )}
         </div>
-        <RequestHistory
-          history={requestHistory}
-          onSelectRequest={handleSelectRequest}
-          onAboutClick={navigateToAbout}
-        />
+        <div className="request-history-wrapper">
+          <RequestHistory
+            history={requestHistory}
+            onSelectRequest={handleSelectRequest}
+          />
+          <div className="about-button-container">
+            <Button label="About MoodMelody" onClick={navigateToAbout} />
+          </div>
+        </div>
       </main>
     </div>
   );

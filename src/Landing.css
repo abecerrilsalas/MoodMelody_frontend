@@ -67,16 +67,14 @@ html, body {
 }
 
 .landing-page button {
-  width: 100%;
-  max-width: 300px;
-  padding: 10px;
-  background-color: #1B2536;
-  color: white;
+  background-color: #4CAF50; 
+  color: #FFFFFF; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  padding: 15px 30px; /* Increase padding for a bigger button */
+  font-size: 1.2rem; /* Increase font size */
+  max-width: 100%;
 }
 
 .landing-page button:hover {

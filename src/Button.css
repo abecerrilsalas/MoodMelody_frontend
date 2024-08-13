@@ -11,3 +11,16 @@
   width: 100%; 
   min-height: 91px;
 }
+
+.button {
+  background-color: #4CAF50; /* Lighter green shade */
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px; /* Adjust the padding as needed */
+}
+
+.button:hover {
+  background-color: #66BB6A; /* Slightly different green for hover effect */
+}
