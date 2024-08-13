@@ -32,11 +32,12 @@ const Playlist = () => {
   const [currentDescription, setCurrentDescription] = useState(
     description || ""
   );
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [currentSpotifyLink, setCurrentSpotifyLink] = useState(spotifyLink);
   const [requestHistory, setRequestHistory] = useState(initialHistory || []);
   const [showPlaylist, setShowPlaylist] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const fetchHistory = useCallback(async () => {
     try {
@@ -54,12 +55,15 @@ const Playlist = () => {
     if (!initialHistory) {
       fetchHistory();
     }
-    if (spotifyLink) {
+    if (spotifyLink && isInitialLoad) {
       setLoading(true);
-      setShowPlaylist(true);
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+        setShowPlaylist(true);
+        setIsInitialLoad(false);
+      }, 2000); // 3-second delay for initial load
     }
-  }, [fetchHistory, spotifyLink, initialHistory]);
+  }, [fetchHistory, spotifyLink, initialHistory, isInitialLoad]);
 
   const handleInputChange = (e) => {
     setCurrentDescription(e.target.value);
@@ -83,11 +87,11 @@ const Playlist = () => {
 
       if (response.data.spotify_link) {
         setCurrentSpotifyLink(response.data.spotify_link);
-        fetchHistory(); // Immediately fetch updated history
+        await fetchHistory(); // Immediately fetch updated history
         setTimeout(() => {
           setLoading(false);
           setShowPlaylist(true);
-        }, 1000); // Reduced to 1 second
+        }, 1000); // 3-second delay before showing the playlist
       } else {
         setError(
           "Failed to fetch recommendations. No Spotify link found in the response."
