@@ -25,7 +25,7 @@ describe("SpotifyPlayer", () => {
   it("has correct attributes", () => {
     render(<SpotifyPlayer spotifyLink={mockSpotifyLink} />);
     const iframeElement = screen.getByTitle("Spotify");
-    expect(iframeElement).toHaveAttribute("width", "300");
+    expect(iframeElement).toHaveAttribute("width", "100%"); // Updated to match component
     expect(iframeElement).toHaveAttribute("height", "380");
     expect(iframeElement).toHaveAttribute("frameBorder", "0");
     expect(iframeElement).toHaveAttribute("allow", "encrypted-media");
@@ -35,7 +35,7 @@ describe("SpotifyPlayer", () => {
     render(<SpotifyPlayer spotifyLink={mockSpotifyLink} />);
     const iframeElement = screen.getByTitle("Spotify");
     expect(iframeElement).toHaveStyle({
-      width: "100%",
+      width: "110%", // Confirmed to match component
       maxWidth: "600px",
     });
   });

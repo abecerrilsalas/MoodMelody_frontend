@@ -8,12 +8,12 @@ const SpotifyPlayer = ({ spotifyLink }) => {
   return (
     <iframe
       src={embedUrl}
-      width="300"
+      width="100%"
       height="380"
       frameBorder="0"
       allow="encrypted-media"
       title="Spotify"
-      style={{ width: "100%", maxWidth: "600px" }}
+      style={{ width: "110%", maxWidth: "600px" }}
     ></iframe>
   );
 };

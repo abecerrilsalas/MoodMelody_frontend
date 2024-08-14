@@ -16,7 +16,10 @@ const RequestHistory = ({ history, onSelectRequest }) => (
     <ul className="history-list">
       {history.map((item, index) => (
         <li key={index} onClick={() => onSelectRequest(item)}>
-          {item.description} - {new Date(item.timestamp).toLocaleString()}
+          <div className="history-item-description">{item.description}</div>
+          <div className="history-item-timestamp">
+            {new Date(item.timestamp).toLocaleString()}
+          </div>
         </li>
       ))}
     </ul>

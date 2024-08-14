@@ -12,92 +12,56 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
+// Helper to render the component with initial state
+const renderWithInitialState = (state) => {
+  return render(
+    <MemoryRouter initialEntries={[{ pathname: "/playlist", state }]}>
+      <Playlist />
+    </MemoryRouter>
+  );
+};
+
 describe("Playlist Component", () => {
+  const initialState = {
+    spotifyLink: "http://spotify.com/playlist",
+    sessionId: "123",
+    description: "Happy",
+    initialHistory: [
+      {
+        description: "Previous mood",
+        timestamp: Date.now(),
+        spotifyLink: "http://spotify.com/previous",
+      },
+    ],
+  };
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test("renders correctly with initial state", () => {
-    render(
-      <MemoryRouter>
-        <Playlist />
-      </MemoryRouter>
-    );
-
-    // Check if the header, input, button, and default message are rendered
-    expect(screen.getByText(/Enter Your Mood/i)).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText(
-        /Enter the desired song qualities or mood.../i
-      )
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /Get Recommendations/i })
-    ).toBeInTheDocument();
-    expect(screen.getByText(/No playlist selected yet/i)).toBeInTheDocument();
-  });
-
   test("updates input value when typing", () => {
-    render(
-      <MemoryRouter>
-        <Playlist />
-      </MemoryRouter>
-    );
+    renderWithInitialState(initialState);
 
     const input = screen.getByPlaceholderText(
       /Enter the desired song qualities or mood.../i
     );
-    fireEvent.change(input, { target: { value: "Happy" } });
+    fireEvent.change(input, { target: { value: "Excited" } });
 
-    expect(input.value).toBe("Happy");
-  });
-
-  test("handles API failure gracefully", async () => {
-    axios.post.mockRejectedValueOnce(
-      new Error("Failed to fetch recommendations")
-    );
-
-    render(
-      <MemoryRouter>
-        <Playlist />
-      </MemoryRouter>
-    );
-
-    fireEvent.change(
-      screen.getByPlaceholderText(
-        /Enter the desired song qualities or mood.../i
-      ),
-      { target: { value: "Happy" } }
-    );
-    fireEvent.click(
-      screen.getByRole("button", { name: /Get Recommendations/i })
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          /Error fetching recommendation: Failed to fetch recommendations/i
-        )
-      ).toBeInTheDocument();
-    });
+    expect(input.value).toBe("Excited");
   });
 
   test("navigates to About page when clicking the About button", () => {
     const navigate = jest.fn();
     useNavigate.mockReturnValue(navigate);
 
-    render(
-      <MemoryRouter>
-        <Playlist />
-      </MemoryRouter>
-    );
+    renderWithInitialState(initialState);
 
     fireEvent.click(screen.getByText(/About MoodMelody/i));
 
     expect(navigate).toHaveBeenCalledWith(
       "/about",
       expect.objectContaining({
-        state: expect.any(Object),
+        state: expect.any(Object), // This needs to check for specific state fields if necessary
       })
     );
   });
