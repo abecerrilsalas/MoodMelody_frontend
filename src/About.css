@@ -1,31 +1,40 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Prevents horizontal scrolling */
-}
-
+/* General styles for the About page */
 .about-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 15px;
-  max-width:800px;
+  max-width: 800px;
   margin: 0 auto;
-  text-align: center;
-  min-height: calc(100vh - 160px); /* Subtract space for header and footer */
-  box-sizing: border-box;
-  overflow-y: auto;
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding: 20px;
+  text-align: left; /* Ensure text is aligned to the left */
+  overflow-y: auto; /* Allow vertical scrolling */
+  max-height: calc(100vh - 160px); /* Adjust height to allow scrolling within the viewport */
+  box-sizing: border-box; /* Include padding and border in the element's width and height */
 }
 
+/* Adjust the font size and spacing */
 .about-content h1 {
-  margin-bottom: 15px;
+  font-size: 2rem; /* Smaller font size for the main heading */
+  margin-bottom: 20px; /* Space below the main heading */
   color: #1B2536;
-  font-size: 2.5rem;
 }
+
+.about-content p {
+  font-size: 0.9rem; /* Smaller font size for paragraphs */
+  margin-bottom: 10px; /* Less space between paragraphs */
+  line-height: 1.5; /* Adjust line height for better readability */
+}
+
+.about-content h2 {
+  font-size: 1.5rem; /* Adjust the font size for subheadings */
+  margin-top: 20px; /* Space above the subheading */
+  margin-bottom: 15px; /* Space below the subheading */
+}
+
+/* Adjust button spacing */
+.about-content .button {
+  margin-top: 20px; /* Space above the button */
+  padding: 10px 15px; /* Adjust padding for the button */
+  font-size: 1rem; /* Adjust the font size for the button text */
+}
+
 
 /* Media query for smaller screens */
 @media (max-width: 600px) {
