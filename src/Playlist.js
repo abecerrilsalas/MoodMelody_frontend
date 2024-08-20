@@ -64,7 +64,7 @@ const Playlist = () => {
         setLoading(false);
         setShowPlaylist(true);
         setIsInitialLoad(false);
-      }, 2000); // 3-second delay for initial load
+      }, 3000); // 3-second delay for initial load
     }
   }, [fetchHistory, spotifyLink, initialHistory, isInitialLoad]);
 
